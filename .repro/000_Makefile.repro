@@ -1,6 +1,6 @@
 
 # identify the REPRO and associated Docker image
-REPRO_NAME=repro-template
+REPRO_NAME=go-cli
 REPRO_DOCKER_ORG=cirss
 REPRO_IMAGE_TAG=latest
 REPRO_IMAGE=${REPRO_DOCKER_ORG}/${REPRO_NAME}:${REPRO_IMAGE_TAG}
@@ -12,12 +12,8 @@ REPRO_DOCKER_OPTIONS=
 REPRO_DIR=/mnt/${REPRO_NAME}
 
 # identify important REPRO subdirectories
-REPRO_CODE_DIR=src
+REPRO_CODE_DIR=go
 REPRO_EXAMPLES_DIR=examples
-REPRO_SERVICE_DIR=service
-
-# define command for running the service provided by this REPRO
-REPRO_SERVICE_COMMAND=${REPRO_SERVICE_DIR}/run.sh
 
 # define command for running the REPRO Docker image
 REPRO_RUN_COMMAND=docker run -it --rm $(REPRO_DOCKER_OPTIONS)               \

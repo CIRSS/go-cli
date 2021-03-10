@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-ENV REPRO_NAME  repro-template
+ENV REPRO_NAME  go-cli
 ENV REPRO_MNT   /mnt/${REPRO_NAME}
 ENV REPRO_USER  repro
 ENV REPRO_UID   1000
@@ -14,6 +14,14 @@ RUN echo '***** Update packages *****'                                      \
                                                                             \
  && echo '***** Install command-line utility packages *****'                \
  && apt -y install sudo less file tree nano vim
+
+ENV GO_VERSION       1.16
+ENV GO_DOWNLOADS_URL https://dl.google.com/go
+ENV GO_ARCHIVE       go${GO_VERSION}.linux-amd64.tar.gz
+
+RUN echo '****** Install Go development tools *****'                        \
+    && wget ${GO_DOWNLOADS_URL}/${GO_ARCHIVE} -O /tmp/${GO_ARCHIVE}         \
+    && tar -xzf /tmp/${GO_ARCHIVE} -C /usr/local
 
 RUN echo '***** Add the REPRO user and group *****'                         \
  && groupadd ${REPRO_USER} --gid ${REPRO_GID}                               \
@@ -32,7 +40,12 @@ ENV BASHRC ${HOME}/.bashrc
 USER  ${REPRO_USER}
 WORKDIR $HOME
 
+RUN echo 'PATH=~/go/bin:/usr/local/go/bin:$PATH' >> ${BASHRC}
 RUN echo "export IN_RUNNING_REPRO=${REPRO_NAME}" >> ${BASHRC}
 RUN echo "cd ${REPRO_MNT}" >> ${BASHRC}
+
+# COPY go code
+# ENV PATH /usr/local/go/bin:${PATH}
+# RUN make -C code install
 
 CMD  /bin/bash -il
