@@ -6,5 +6,4 @@ package:
 clean:
 	go clean ./...
 	rm -rf ./.build/*
-	chmod -R +w ./.go
-	rm -rf ./.go/pkg
+	rm -rf ./.gopath/pkg
