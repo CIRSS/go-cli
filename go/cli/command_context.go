@@ -24,6 +24,7 @@ type CommandContext struct {
 	Args           []string
 	Flags          *flag.FlagSet
 	Quiet          *bool
+	Silent         *bool
 	InReader       io.Reader
 	OutWriter      io.Writer
 	ErrWriter      io.Writer
@@ -48,6 +49,7 @@ func NewCommandContext(pc *ProgramContext, commands *CommandSet) (cc *CommandCon
 	cc.Providers = make(map[string]func(cc *CommandContext) interface{})
 
 	cc.Quiet = cc.Flags.Bool("quiet", false, "Discard normal command output")
+	cc.Silent = cc.Flags.Bool("silent", false, "Discard normal and error command output")
 
 	return
 }
@@ -120,6 +122,11 @@ func (cc *CommandContext) ParseCommandFlags() (err error) {
 
 	if *cc.Quiet {
 		cc.OutWriter = NullWriter{}
+	}
+
+	if *cc.Silent {
+		cc.OutWriter = NullWriter{}
+		cc.ErrWriter = NullWriter{}
 	}
 
 	return
