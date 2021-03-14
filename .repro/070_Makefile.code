@@ -3,13 +3,13 @@
 ## 
 
 clean-code:             ## Delete artifacts from previous builds.
-	$(RUN_IN_REPRO) 'make -C ${REPRO_CODE_DIR} clean'
+	$(RUN_IN_REPRO) 'make -C ${REPRO_DIR} -f Makefile-go clean'
 
 build-code:             ## Build custom code.
-	$(RUN_IN_REPRO) 'make -C ${REPRO_CODE_DIR} build'
+	$(RUN_IN_REPRO) 'make -C ${REPRO_DIR} -f Makefile-go build'
 
 test-code:              ## Run tests on custom code.
-	$(RUN_IN_REPRO) 'make -C ${REPRO_CODE_DIR} test'
+	$(RUN_IN_REPRO) 'make -C ${REPRO_DIR} -f Makefile-go test'
 
-package-code:           ## Package custom artifacts for distribution.
-	$(RUN_IN_REPRO) 'make -C ${REPRO_CODE_DIR} package'
+#package-code:           # Package custom artifacts for distribution.
+#	$(RUN_IN_REPRO) 'make -C ${REPRO_DIR} -f Makefile-go package'
