@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/cirss/go-cli"
+	"github.com/cirss/go-cli/pkg/cli"
 )
 
 func main() {
