@@ -1,17 +1,12 @@
 ## 
 ## # Aliases for targets in this Makefile.
-## 
 
 # Define target aliases available both inside and outside a running REPRO
-build:    build-code    ## Build all of the custom code.
-test:     test-code     ## Run all of the tests on custom code.
-clean:    clean-code    ## Delete artifacts from previous builds.
+build:                  build-code      ## 
+test:                   test-code       ## 
 
-## 
 # Define target aliases available only outside a running REPRO
 ifndef IN_RUNNING_REPRO
-image:    build-image   ## Build the Docker image used to run this REPRO.
-start:    start-image   ## Start the REPRO using the Docker image.
+image:                  build-image     ## 
+start:                  start-image     ## 
 endif
-
-## 
