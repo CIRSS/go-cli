@@ -4,6 +4,7 @@ import (
 	"flag"
 	"io"
 	"os"
+	"strings"
 )
 
 // ProgramContext enables tests to manipulate the input and
@@ -41,7 +42,7 @@ func (pc *ProgramContext) InitFlagSet() *flag.FlagSet {
 
 // Run invokes the wrapped main() function after
 // instantiating a new FlagSet.
-func (pc *ProgramContext) Run() int {
+func (pc *ProgramContext) Main() int {
 	pc.TestMode = true
 	pc.mainFunc()
 	return pc.ExitCode
@@ -54,6 +55,9 @@ func (pc *ProgramContext) ExitIfNonzero(code int) {
 	}
 }
 
-func (pc *ProgramContext) NewCommandContext(commands *CommandSet) (cc *CommandContext) {
-	return NewCommandContext(pc, commands)
+func (pc *ProgramContext) Invoke(commandLine string) int {
+	pc.ExitCode = 0
+	os.Args = strings.Fields(commandLine)
+	exitCode := pc.Main()
+	return exitCode
 }
