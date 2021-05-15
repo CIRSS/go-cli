@@ -55,6 +55,14 @@ func (pc *ProgramContext) ExitIfNonzero(code int) {
 	}
 }
 
+func (pc *ProgramContext) InvokeOnInput(commandLine string, input string) int {
+	pc.InReader = strings.NewReader(input)
+	pc.ExitCode = 0
+	os.Args = strings.Fields(commandLine)
+	exitCode := pc.Main()
+	return exitCode
+}
+
 func (pc *ProgramContext) Invoke(commandLine string) int {
 	pc.ExitCode = 0
 	os.Args = strings.Fields(commandLine)
